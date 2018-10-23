@@ -22,8 +22,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<docker.repostory>registry.cn-hangzhou.aliyuncs.com/xuyong_registory</docker.repostory>
-        <docker.registry.name>test.x</docker.registry.name>
+		<docker.repostory>registry.cn-hangzhou.aliyuncs.com</docker.repostory>
+        <docker.registry.name>xuyong_registory</docker.registry.name>
 	</properties>
 
 	<dependencies>
@@ -41,6 +41,21 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
+        
+        <dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-consul-discovery</artifactId>
+			<version>2.0.0.RELEASE</version>
+		</dependency>
+ 
+		<!--feign依赖 配置-->
+		<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-feign -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-feign</artifactId>
+			<version>1.4.5.RELEASE</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -76,17 +91,17 @@
                             <goal>build</goal>
                         </goals>
                     </execution>
-                    <execution>
+                    <!-- execution>
                         <id>tag-image</id>
                         <phase>package</phase>
                         <goals>
                             <goal>tag</goal>
                         </goals>
                         <configuration>
-                            <image>${docker.registry.name}/${project.artifactId}:${project.version}</image>
+                            <image>${project.artifactId}:${project.version}</image>
                             <newName>${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}</newName>
                         </configuration>
-                    </execution>
+                    </execution -->
                     <execution>
                         <id>push-image</id>
                         <phase>deploy</phase>
@@ -111,9 +126,14 @@
                     </imageName>
                     <imageTags>
                         <!--docker的tag为项目版本号、latest-->
-                        <imageTag>${git.commit.id.abbrev}</imageTag>
+                        <!-- imageTag>${git.commit.id.abbrev}</imageTag -->
+                        <imageTag>${project.version}</imageTag>
                         <imageTag>latest</imageTag>
                     </imageTags>
+                    <!-- 解决Connect to localhost:2375的问题的其中一种方式，注意要跟docker-machine env相一致 -->
+					<dockerHost>https://192.168.99.100:2376</dockerHost>                
+					<dockerCertPath>C:\Users\E0446\.docker\machine\machines\default</dockerCertPath>
+					<serverId>docker-registry</serverId>
                     <resources>
                         <rescource><!-- 将打包文件放入dockerDirectory指定的位置 -->
                             <targetPath>/</targetPath>

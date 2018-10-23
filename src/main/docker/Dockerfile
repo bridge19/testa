@@ -3,7 +3,7 @@ FROM java:8
 
 MAINTAINER Ryuu KK "ryuu_kk@163.com"
 
-# 环境变量
+# 鐜鍙橀噺
 ENV WORK_PATH /home/project/dockerdemo
 ENV APP_NAME @project.build.finalName@.@project.packaging@
 ENV APP_VERSION @project.version@
@@ -29,8 +29,3 @@ COPY $APP_NAME $WORK_PATH/
 # WORKDIR
 WORKDIR $WORK_PATH
 
-# ENTRYPOINT 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom"]
-
-# CMD
-CMD ["-jar", "@project.build.finalName@.@project.packaging@"]
