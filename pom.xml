@@ -23,7 +23,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<docker.repostory>registry.cn-hangzhou.aliyuncs.com/xuyong_registory</docker.repostory>
-        <docker.registry.name>test.x</docker.registry.name>
+        <docker.registry.name>spring</docker.registry.name>
 	</properties>
 
 	<dependencies>
@@ -83,7 +83,7 @@
                             <goal>tag</goal>
                         </goals>
                         <configuration>
-                            <image>${docker.registry.name}/${project.artifactId}:${project.version}</image>
+                            <image>${project.artifactId}:${project.version}</image>
                             <newName>${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}</newName>
                         </configuration>
                     </execution>
